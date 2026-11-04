@@ -97,7 +97,7 @@ Explain $0 for a $1-level developer, in Korean, in under 10 lines.
 name: git-snapshot
 description: Summarize current git state, optionally focusing on a path
 argument-hint: [path]
-allowed-tools: Bash(git *)
+allowed-tools: Bash(git branch --show-current), Bash(git status --short), Bash(git log --oneline -5)
 disable-model-invocation: true
 ---
 
@@ -113,13 +113,19 @@ Summarize the repo state in 3 bullet points.
 If a path was given, focus only on changes under: $ARGUMENTS
 ```
 
+> 보안 메모: 튜토리얼 예시의 `Bash(git *)`는 `git push --force`, `git reset --hard`, `git clean -fdx`까지 확인 없이 허용한다. `allowed-tools`는 실제로 쓰는 명령만 정확히 적는다 (최소 권한). `Bash(git branch *)`도 `git branch -D`를 허용하므로 정확한 명령 매칭이 가장 안전하다.
+
 확인:
 
 1. `/git-snapshot` → Claude가 git 도구 호출 없이 바로 요약하는가?
 2. `/git-snapshot scripts/` → 해당 경로에 집중하는가?
 3. "git 상태 알려줘"라고 말만 하면 → 이 스킬이 **자동 실행되지 않아야** 정상 (`disable-model-invocation: true`)
 
-결과:
+결과: 모두 성공 (2026-11-04).
+
+1. `` !`...` `` 자리에 실제 git 출력이 삽입됨. Claude는 Bash 도구를 호출하지 않고 바로 요약. 좁힌 `allowed-tools`로도 정상 동작.
+2. `/git-snapshot study/` → `$ARGUMENTS`가 `study/`로 치환되어 요약이 `study/`에 집중. 단, `$ARGUMENTS`는 지시문만 바꾸고 셸 출력은 그대로다. 출력까지 거르려면 `` !`git status --short -- $ARGUMENTS` ``처럼 명령 안에서 써야 하고 `allowed-tools`도 맞춰야 한다.
+3. "git 상태 알려줘" → 스킬이 실행되지 않고 Claude가 Bash 도구로 직접 `git status` 실행. `disable-model-invocation: true` 스킬은 Claude가 볼 수 있는 스킬 목록에 아예 나타나지 않는다 (`hello`, `explain`은 목록에 있음).
 
 ## 막힌 점 & 해결
 
@@ -131,7 +137,9 @@ If a path was given, focus only on changes under: $ARGUMENTS
 
 - [x] 실습 1: 기본 스킬 호출 성공
 - [x] 실습 2: `$0`/`$1` 인자 동작 확인
-- [ ] 실습 3: 동적 컨텍스트 삽입 확인
-- [ ] 실습 3: 자동 호출 차단 확인
+- [x] 실습 3: 동적 컨텍스트 삽입 확인
+- [x] 실습 3: 자동 호출 차단 확인
 
 ## 한 줄 요약
+
+SKILL.md = frontmatter(이름·설명·권한·호출 제어) + 본문 프롬프트. `$0`/`$ARGUMENTS`로 인자, `` !`cmd` ``로 실행 전 컨텍스트 주입, `allowed-tools`는 최소 권한으로.
