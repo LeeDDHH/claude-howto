@@ -68,7 +68,7 @@ Greet me in Korean, then summarize this project in 2 sentences.
 
 확인: 새 세션에서 `/hello` 실행.
 
-결과:
+결과: 성공 (2026-11-04). `/` 메뉴에 `hello`가 나타났고, 실행하니 한국어 인사와 프로젝트 요약 2문장이 나왔다. 실행 시 `Base directory for this skill: ~/.claude/skills/hello`가 함께 주입되는 것도 확인했다.
 
 ### 실습 2: 인자 받기 — `/explain`
 
@@ -125,7 +125,7 @@ If a path was given, focus only on changes under: $ARGUMENTS
 
 ## 완료 기준 체크
 
-- [ ] 실습 1: 기본 스킬 호출 성공
+- [x] 실습 1: 기본 스킬 호출 성공
 - [ ] 실습 2: `$0`/`$1` 인자 동작 확인
 - [ ] 실습 3: 동적 컨텍스트 삽입 확인
 - [ ] 실습 3: 자동 호출 차단 확인
