@@ -104,3 +104,6 @@ scripts/.vendor-cache/
 
 # Personal Claude Code instructions (learners and contributors)
 CLAUDE.local.md
+
+# oh-my-claudecode state
+.omc/
