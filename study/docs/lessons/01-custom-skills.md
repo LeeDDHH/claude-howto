@@ -84,7 +84,11 @@ Explain $0 for a $1-level developer, in Korean, in under 10 lines.
 
 확인: `/explain 01-slash-commands/README.md beginner`
 
-결과:
+결과: 성공 (2026-11-04). 본문이 `Explain 01-slash-commands/README.md for a beginner-level developer, ...`로 치환되어 전달됨 → `$0`=파일 경로, `$1`=`beginner` 확인. 인자는 공백 기준으로 나뉜다.
+
+- `argument-hint`: `/expl` 입력 시 명령 목록에 `[target] [level]` 힌트 표시.
+- 수준 비교: `beginner`는 쉬운 말로 개념 위주, `advanced`(`/explain 01-slash-commands advanced`)는 호출 제어·`allowed-tools`·훅 실행 순서 등 내부 동작 위주 → `$1`이 결과를 바꾼다.
+- 대상(`$0`)에 파일 대신 디렉터리를 줘도 동작한다.
 
 ### 실습 3: 동적 컨텍스트 — `/git-snapshot`
 
@@ -126,7 +130,7 @@ If a path was given, focus only on changes under: $ARGUMENTS
 ## 완료 기준 체크
 
 - [x] 실습 1: 기본 스킬 호출 성공
-- [ ] 실습 2: `$0`/`$1` 인자 동작 확인
+- [x] 실습 2: `$0`/`$1` 인자 동작 확인
 - [ ] 실습 3: 동적 컨텍스트 삽입 확인
 - [ ] 실습 3: 자동 호출 차단 확인
 
